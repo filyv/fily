@@ -15,8 +15,6 @@ defmodule FilyWeb.ImageController do
   end
 
   def create(conn, %{"image" => image_params}) do
-    IO.inspect image_params
-
     case Uploader.create_image(image_params) do
       {:ok, image} ->
         conn
