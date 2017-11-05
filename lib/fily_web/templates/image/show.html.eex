@@ -1,7 +1,7 @@
 <h2>Show Image</h2>
 
 <ul>
-
+  <%= @image.url %>
 </ul>
 
 <span><%= link "Edit", to: image_path(@conn, :edit, @image) %></span>
