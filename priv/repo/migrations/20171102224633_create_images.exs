@@ -3,7 +3,7 @@ defmodule Fily.Repo.Migrations.CreateImages do
 
   def change do
     create table(:images) do
-      add :urlimagen, :string
+      add :url, :string
 
       timestamps()
     end

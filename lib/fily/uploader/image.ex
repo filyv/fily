@@ -5,14 +5,14 @@ defmodule Fily.Uploader.Image do
 
 
   schema "images" do
-
+    field :url, :string
     timestamps()
   end
 
   @doc false
   def changeset(%Image{} = image, attrs) do
     image
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:url])
+    |> validate_required([:url])
   end
 end

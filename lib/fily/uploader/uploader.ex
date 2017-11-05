@@ -49,9 +49,26 @@ defmodule Fily.Uploader do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_image(attrs \\ %{}) do
-    %Image{}
-    |> Image.changeset(attrs)
+  def create_image(imageParams) do
+    if upload = imageParams["photo"] do
+      # FIXME: Obtener una llave única con la cual se pueda guardar la imagen.
+      # Esto se debe a que sí se trata de una nueva imagen, aún no contiene un
+      # id. Por ello es que se requiere obtener el ID del modelo al que se puede
+      # relacionar O generar un UUID el cual, por definición, siempre será
+      # único, sin importar las circunstancias. Por el momento se simulará un uuid.
+      uuid = "98fbdb67-bcde-48ea-9225-cb4412e5d95c"
+      extension = Path.extname(upload.filename)
+      pathbase = Path.absname("media")
+      filepath = Path.join([pathbase, "/#{uuid}-img#{extension}"])
+      IO.puts(filepath)
+      File.cp!(upload.path, filepath)
+      newParams = Map.put(imageParams, "url", filepath)
+    else
+      newParams = imageParams
+    end
+
+    image = %Image{}
+    |> Image.changeset(newParams)
     |> Repo.insert()
   end
 
